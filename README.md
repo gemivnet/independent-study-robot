@@ -7,6 +7,6 @@ This is a project I worked on during my senior year of high school. The goal of 
 * Sparkfun RedBoard
 * Parallax Robot Shield Kit
 * Sparkfun MMA8452
-* ESP8266
+* ESP8266 ESP-01
 * LV MaxSonar EZ2
 * HiTEC HS-485HB Servo
