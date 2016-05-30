@@ -22,6 +22,7 @@ public class Main {
 		Frame.getInstance().initFrame();
 		update.schedule(updateTask, 1000 / UPS, 1000 / UPS);
 		
+		
 	}
 	
 	TimerTask updateTask = new TimerTask() {
