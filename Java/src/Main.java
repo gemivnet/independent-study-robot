@@ -10,6 +10,10 @@ public class Main {
 		return instance;
 	}
 	
-	
+	public void init() {
+		
+		Frame.getInstance().initFrame();
+		
+	}
 	
 }
