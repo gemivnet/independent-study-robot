@@ -25,6 +25,9 @@ public class Paint extends JPanel {
 		
 		// Draw Robot's Track if Selected
 		
+		int xO = Frame.getInstance().getXOffset();
+		int yO = Frame.getInstance().getYOffset();
+		
 		if (Frame.getInstance().isDrawRobotSelected()) {
 			
 			ArrayList<Point> robot = Main.getInstance().getRobot();
@@ -32,22 +35,60 @@ public class Paint extends JPanel {
 			int prevX = 0, prevY = 0;
 			
 			for (int i = 0; i < robot.size(); i++) {
+				
+				int robotX = robot.get(i).getRobotX() + xO;
+				int robotY = robot.get(i).getRobotY() + yO;
+				
 				g.setColor(Color.RED);
-				g.fillRect(robot.get(i).getRobotX(), robot.get(i).getRobotY(), 3, 3);
+				g.fillRect(robotX, robotY, 3, 3);
 				
 				if (Frame.getInstance().isDrawRobotLinesSelected()) {
 					if (i == 0) {
-						prevX = robot.get(i).getRobotX();
-						prevY = robot.get(i).getRobotY();
+						prevX = robotX;
+						prevY = robotY;
 					} else {
-						g.drawLine(robot.get(i).getRobotX(), robot.get(i).getRobotY(), prevX, prevY);
-						prevX = robot.get(i).getRobotX();
-						prevY = robot.get(i).getRobotY();
+						g.drawLine(robotX, robotY, prevX, prevY);
+						prevX = robotX;
+						prevY = robotY;
 					}
 					
 					
 				}
 				
+			}
+			
+		}
+		
+		if (Frame.getInstance().isDrawWallSelected()) {
+			
+			ArrayList<Point> wall = Main.getInstance().getWall();
+			
+			int prevX = 0, prevY = 0;
+			
+			for (int i = 0; i < wall.size(); i++) {
+				
+				int robotX = wall.get(i).getRobotX();
+				int robotY = wall.get(i).getRobotY();
+			
+				robotX = (int) (xO + robotX + wall.get(i).getDistance() * Math.cos(Math.toRadians(wall.get(i).getDistance())));
+				robotY = (int) (yO + robotY + wall.get(i).getDistance() * Math.sin(Math.toRadians(wall.get(i).getDistance())));
+			
+				g.setColor(Color.BLACK);
+				g.fillRect(robotX, robotY, 3, 3);
+				
+				if (Frame.getInstance().isDrawWallLinesSelected()) {
+					if (i == 0) {
+						prevX = robotX;
+						prevY = robotY;
+					} else {
+						g.drawLine(robotX, robotY, prevX, prevY);
+						prevX = robotX;
+						prevY = robotY;
+					}
+					
+					
+				}
+			
 			}
 			
 		}

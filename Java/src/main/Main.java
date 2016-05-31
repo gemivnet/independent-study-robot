@@ -1,7 +1,7 @@
 package main;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,7 +33,7 @@ public class Main {
 	ArrayList<Point> wall = null;
 	ArrayList<Point> robot = null;
 	
-	int moveScale = 10, turnScale = 10;
+	int moveScale = 15, turnScale = 6;
 	
 	public void map(ArrayList<Command> c) {
 		
@@ -50,13 +50,13 @@ public class Main {
 			Command com = c.get(i);
 			switch (com.getType()) {
 			case "m0":
-				robotX += com.getAmount() * Math.cos(Math.toRadians(heading)) / turnScale;
-				robotY += com.getAmount() * Math.sin(Math.toRadians(heading)) / turnScale;
+				robotX += com.getAmount() * Math.cos(Math.toRadians(heading)) / moveScale;
+				robotY += com.getAmount() * Math.sin(Math.toRadians(heading)) / moveScale;
 				robot.add(new Point(robotX, robotY));
 				break;
 			case "m1":
-				robotX -= com.getAmount() * Math.cos(Math.toRadians(heading)) / turnScale;
-				robotY -= com.getAmount() * Math.sin(Math.toRadians(heading)) / turnScale;
+				robotX -= com.getAmount() * Math.cos(Math.toRadians(heading)) / moveScale;
+				robotY -= com.getAmount() * Math.sin(Math.toRadians(heading)) / moveScale;
 				robot.add(new Point(robotX, robotY));
 				break;
 			case "m2":
@@ -66,6 +66,43 @@ public class Main {
 				heading += com.getAmount() / turnScale;
 				break;
 			}
+		}
+		
+		// Make points based on the wall
+		
+		wall = new ArrayList<Point>();
+		
+		robotX = Frame.getInstance().getWidth() / 2;
+		robotY = Frame.getInstance().getHeight() / 2;
+		
+		heading = 0;
+		
+		for (int i = 0; i < c.size(); i++) {
+			Command com = c.get(i);
+			switch (com.getType()) {
+			case "s1":
+				wall.add(new Point(robotX - 500 / moveScale, robotY - 500 / moveScale, heading - 90, com.getAmount()));
+				break;
+			case "s3":
+				wall.add(new Point(robotX - 500 / moveScale, robotY - 500 / moveScale, heading, com.getAmount()));
+				break;
+			case "m0":
+				robotX += com.getAmount() * Math.cos(Math.toRadians(heading)) / moveScale;
+				robotY += com.getAmount() * Math.sin(Math.toRadians(heading)) / moveScale;
+				break;
+			case "m1":
+				robotX -= com.getAmount() * Math.cos(Math.toRadians(heading)) / moveScale;
+				robotY -= com.getAmount() * Math.sin(Math.toRadians(heading)) / moveScale;
+				break;
+			case "m2":
+				heading -= com.getAmount() / turnScale;
+				break;
+			case "m3":
+				heading += com.getAmount() / turnScale;
+				break;
+			}
+			
+			
 		}
 		
 		
@@ -78,8 +115,7 @@ public class Main {
 		raw = "";
 
 		try {
-			BufferedReader br = new BufferedReader(
-					new FileReader("C://Users//GEMIV//Desktop//thing.txt"));
+			BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("c.txt")));
 
 			StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
@@ -123,6 +159,7 @@ public class Main {
 	
 	TimerTask updateTask = new TimerTask() {
 		public void run() {
+			map(getInput());
 			Frame.getInstance().update();
 		}
 	};
@@ -137,6 +174,22 @@ public class Main {
 	
 	public ArrayList<Point> getRobot() {
 		return robot;
+	}
+	
+	public int getMoveScale() {
+		return moveScale;
+	}
+	
+	public void setMoveScale(int i) {
+		moveScale = i;
+	}
+	
+	public int getTurnScale() {
+		return turnScale;
+	}
+	
+	public void setTurnScale(int i) {
+		turnScale = i;
 	}
 	
 }
