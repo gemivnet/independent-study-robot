@@ -1,8 +1,7 @@
 SCL - 
 SDA - 
-
-0 - 
-1 - 
+0 - ESP 8266 TX
+1 - ESP 8266 RX
 2 - 
 3 - 
 4 - 
@@ -11,10 +10,10 @@ SDA -
 7 - 
 8 -
 9 - 
-10 - 
+10 - Left Servo
 11 - Camera Servo
 12 - Right Servo
-13 - Left Servo
+13 -
 A0 - AN Pin of Camera
 A1 - 
 A2 - 
