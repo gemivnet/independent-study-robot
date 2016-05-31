@@ -10,3 +10,7 @@ This is a project I worked on during my senior year of high school. The goal of 
 * ESP8266 ESP-01
 * LV MaxSonar EZ2
 * HiTEC HS-485HB Servo
+
+#### Theory of Operation
+
+The Robot drives around the room following the outermost wall. It goes around the room in a clockwise pattern. The data is then sent over WiFi to a webserver. A Java program then interprets the data and makes a map of the room.
