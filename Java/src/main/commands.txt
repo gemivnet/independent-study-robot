@@ -1,0 +1,24 @@
+("s1", distance)
+
+Stage 1 is when the robot originally looks to the left to make sure that there is a wall to the left of it.
+The second parameter is the distance of the wall.
+
+("c1")
+
+Check 1 checks if the current distance of S1 is greater than the previous distance of S1. If this check is true,
+movement from the robot can be expected.
+
+("c2")
+
+Check 2 checks if the distance of S1 is less than 7. If this check is true, movement from the robot
+can be expected.
+
+("s2")
+
+The robot will now move forward. A movement command is expected during this stage.
+
+("s3", distance)
+
+Stage two moves the servo to point the camera ahead of the robot to check for obstacles. The second parameter is 
+the distance in front of the robot. If this distance is less than the trigger distance a movement command will occur.
+

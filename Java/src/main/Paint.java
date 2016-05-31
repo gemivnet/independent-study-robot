@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -21,6 +22,35 @@ public class Paint extends JPanel {
 		
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, width, height);
+		
+		// Draw Robot's Track if Selected
+		
+		if (Frame.getInstance().isDrawRobotSelected()) {
+			
+			ArrayList<Point> robot = Main.getInstance().getRobot();
+			
+			int prevX = 0, prevY = 0;
+			
+			for (int i = 0; i < robot.size(); i++) {
+				g.setColor(Color.RED);
+				g.fillRect(robot.get(i).getRobotX(), robot.get(i).getRobotY(), 3, 3);
+				
+				if (Frame.getInstance().isDrawRobotLinesSelected()) {
+					if (i == 0) {
+						prevX = robot.get(i).getRobotX();
+						prevY = robot.get(i).getRobotY();
+					} else {
+						g.drawLine(robot.get(i).getRobotX(), robot.get(i).getRobotY(), prevX, prevY);
+						prevX = robot.get(i).getRobotX();
+						prevY = robot.get(i).getRobotY();
+					}
+					
+					
+				}
+				
+			}
+			
+		}
 		
 		
 	}

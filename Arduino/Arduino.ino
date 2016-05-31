@@ -1,14 +1,13 @@
 #include <Servo.h>
 
 Servo left, right, camera;
-const int leftPin = 12, rightPin = 10, cameraPin = 11, cameraSensorPin = 2, averages = 1, separation = 10;
+const int leftPin = 12, rightPin = 10, cameraPin = 11, cameraSensorPin = 0, averages = 1, separation = 10;
 
 void setup() {
 
   camera.attach(cameraPin);
   Serial.begin(9600);
-  pinMode(cameraSensorPin, INPUT);
-
+  
 }
 
 void loop() {
@@ -17,9 +16,26 @@ void loop() {
 
   camera.write(0);
   delay(600);
+ 
   while (getDistance() > separation) {
-  move(0, 1000);
-  delay(1000);
+    Serial.println(getDistance());
+    move(0, 300);
+    move(2, 100);
+  }
+
+  camera.write(90);
+  delay(600);
+
+  if (getDistance() > separation) {
+
+    move(0, 1000);
+    
+  } else {
+
+while (getDistance() < separation) {
+  move(3, 200);
+}
+    
   }
   
 
@@ -29,9 +45,9 @@ void loop() {
 int getDistance() {
   int distance = 0;
   for (int i = 0; i < averages; i++) {
-   distance += pulseIn(cameraSensorPin, HIGH);
+   distance += analogRead(cameraSensorPin);
   }
-  distance /= 147 * averages;
+  distance /= 2 * averages;
   return distance;
   
 }
